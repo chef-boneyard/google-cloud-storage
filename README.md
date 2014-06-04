@@ -100,7 +100,7 @@ with the optional `target_bucket_name`.
       access_key_id gcs['access_key_id']
       secret_access_key gcs['secret_access_key']
       source_bucket_name "my_bucket"
-      target_bucket_name "my_bucket-2"
+      target_bucket_name "my_other_bucket"
       action :copy
     end
 ```
