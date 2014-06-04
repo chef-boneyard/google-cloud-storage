@@ -16,35 +16,42 @@ include Google::Gcs
 
 action :create do
   begin
-    Chef::Log.debug("Attempting to create bucket #{new_resource.bucket_name} on GCS")
-    gcs.put_bucket(new_resource.bucket_name)
-  rescue Excon::Errors::Error
-    print_response($!.response, new_resource.bucket_name)
-  rescue
-    Chef::Log.info("Error creating bucket #{new_resource.bucket_name}")  
+    Chef::Log.info("Attempting to create bucket #{new_resource.bucket_name}")
+    response = gcs.put_bucket(new_resource.bucket_name)
+  rescue Excon::Errors::Error => e
+    print_error(e, new_resource.bucket_name)
+  rescue => e
+    Chef::Log.info(e)
   else
-    Chef::Log.debug("Completed creating bucket #{new_resource.bucket_name} on GCS")
+    if response.status == 200
+      Chef::Log.info("Success creating bucket #{new_resource.bucket_name}")
+    else
+      Chef::Log.info("Creating bucket #{new_resource.bucket_name} returned #{response.status}")
+    end
   end
 end
 
 action :delete do
   begin
-    Chef::Log.debug("Attempting to delete bucket #{new_resource.bucket_name} on GCS")
-    gcs.delete_bucket(new_resource.bucket_name)
-  rescue Excon::Errors::Error
-    print_response($!.response, new_resource.bucket_name)
-  rescue
-    Chef::Log.info("Error deleting bucket #{new_resource.bucket_name}")
+    Chef::Log.info("Attempting to delete bucket #{new_resource.bucket_name}")
+    response = gcs.delete_bucket(new_resource.bucket_name)
+  rescue Excon::Errors::Error => e
+    print_error(e, new_resource.bucket_name)
+  rescue => e
+    Chef::Log.info(e)
   else
-    Chef::Log.debug("Completed deleted bucket #{new_resource.bucket_name} on GCS")
+    if response.status == 204
+      Chef::Log.info("Success deleting bucket #{new_resource.bucket_name}")
+    else
+      Chef::Log.info("Deleting bucket #{new_resource.bucket_name} returned #{response.status}")
+    end
   end
 end
 
 private
 
-def print_response(response, bucket)
-  r = response
-  m = r.body.scan(/<Message>(.*?)<\/Message>/).join
-  Chef::Log.info("Error with bucket #{bucket}")
-  Chef::Log.info(m)
+def print_error(e, bucket)
+  s = e.response.data[:status]
+  m = e.response.body.scan(/<Message>(.*?)<\/Message>/).join
+  Chef::Log.info("Bucket #{bucket}, status #{s}, #{m}")
 end

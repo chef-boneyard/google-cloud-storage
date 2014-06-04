@@ -26,7 +26,7 @@ attribute :content_encoding,                :kind_of => String
 attribute :content_type,                    :kind_of => String
 # x_goog_acl must be one of the following: 'private', 'public-read', 'public-read-write', 'authenticated-read'
 attribute :x_goog_acl,                      :kind_of => String, :default => "private"
-attribute :source_object_name,              :kind_of => String
+attribute :source_object_name,              :kind_of => String, :name_attribute => true
 attribute :target_object_name,              :kind_of => String
 attribute :source_bucket_name,              :kind_of => String
 attribute :target_bucket_name,              :kind_of => String

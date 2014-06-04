@@ -18,5 +18,5 @@ maintainer_email  "paulrossman@google.com"
 license           "Apache 2.0"
 description       "LWRPs for managing GCS resources"
 long_description  IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version           "0.1.0"
+version           "0.8.0"
 recipe            "gcs", "Installs the fog gem and other dependencies"
