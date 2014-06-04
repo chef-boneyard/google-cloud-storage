@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-actions :create, :delete
+actions :put, :delete
 
 attribute :access_key_id,                   :kind_of => String, :required => true
 attribute :secret_access_key,               :kind_of => String, :required => true
@@ -21,5 +21,5 @@ attribute :bucket_name,                     :kind_of => String, :name_attribute 
 
 def initialize(*args)
   super
-  @action = :create
+  @action = :put
 end

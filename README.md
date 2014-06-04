@@ -60,7 +60,7 @@ Manage GCS objects with this resource.
 
 Actions:
 
-* `create` - create a object.
+* `put` - create a object.
 * `delete` - delete a object.
 * `copy` - copy an object from one bucket to another.
 
@@ -70,7 +70,7 @@ Manage GCS buckets with this resource.
 
 Actions:
 
-* `create` - create a new bucket.
+* `put` - create a new bucket.
 * `delete` - delete a bucket.
 
 ## Usage
@@ -85,7 +85,7 @@ This will copy a local file to GCS with private permissions set.
       secret_access_key gcs['secret_access_key']
       bucket_name "my_bucket"
       local_path "/path/to/my_file"
-      action :create
+      action :put
     end
 ```
 

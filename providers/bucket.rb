@@ -14,7 +14,13 @@
 
 include Google::Gcs
 
-action :create do
+# List information about objects in an Google Storage bucket
+# TODO
+#action :get do
+#end
+
+# Create an Google Storage bucket
+action :put do
   begin
     Chef::Log.info("Attempting to create bucket #{new_resource.bucket_name}")
     response = gcs.put_bucket(new_resource.bucket_name)
@@ -31,6 +37,7 @@ action :create do
   end
 end
 
+# Delete an Google Storage bucket
 action :delete do
   begin
     Chef::Log.info("Attempting to delete bucket #{new_resource.bucket_name}")

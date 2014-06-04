@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-actions :create, :delete, :copy
+actions :put, :delete, :copy
 
 attribute :access_key_id,                   :kind_of => String, :required => true
 attribute :secret_access_key,               :kind_of => String, :required => true
@@ -38,5 +38,5 @@ attribute :copy_source_if_unmodified_since, :kind_of => String
 
 def initialize(*args)
   super
-  @action = :create
+  @action = :put
 end

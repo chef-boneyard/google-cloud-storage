@@ -14,7 +14,13 @@
 
 include Google::Gcs
 
-action :create do
+# Get an object from Google Storage
+# TODO
+#action :get do
+#end
+
+# Create an object in an Google Storage bucket
+action :put do
   begin
     Chef::Log.info("Attempting to create #{new_resource.bucket_name}:#{new_resource.object_name}")
     opts = {}
@@ -41,6 +47,7 @@ action :create do
   end
 end
 
+# Delete an object from Google Storage
 action :delete do
   begin
     Chef::Log.info("Attempting to delete #{new_resource.bucket_name}:#{new_resource.object_name}")
@@ -58,6 +65,7 @@ action :delete do
   end
 end
 
+# Copy an object from one Google Storage bucket to another
 action :copy do
   begin
     target_object_name = new_resource.target_object_name || new_resource.source_object_name
