@@ -6,7 +6,8 @@ This cookbook provides libraries, resources and providers to configure
 and manage Google Cloud Storage components. The currently supported
 GCS resources are:
 
- * get (`get`)
+ * bucket (`bucket`)
+ * object (`object`)
 
 ## Requirements
 
@@ -95,7 +96,7 @@ the target object name will be the same as source unless specified
 with the optional `target_bucket_name`.
 
 ```ruby
-    gcs_object "test-file-5" do
+    gcs_object "my_file" do
       access_key_id gcs['access_key_id']
       secret_access_key gcs['secret_access_key']
       source_bucket_name "my_bucket"
