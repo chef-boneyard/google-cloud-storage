@@ -23,12 +23,11 @@ gcs_bucket "logs" do
   action :put
 end
 
-if ::File.exist?(file)
-  gcs_object "#{::File.basename(file)}.#{Time.now.strftime('%Y%m%d')}" do
-    access_key_id gcs['access_key_id']
-    secret_access_key gcs['secret_access_key']
-    bucket_name "logs"
-    local_path file
-    action :put
-  end
+gcs_object "#{::File.basename(file)}.#{Time.now.strftime('%Y%m%d')}" do
+  access_key_id gcs['access_key_id']
+  secret_access_key gcs['secret_access_key']
+  bucket_name "logs"
+  local_path file
+  action :put
+  only_if { File.exists?(file) }
 end

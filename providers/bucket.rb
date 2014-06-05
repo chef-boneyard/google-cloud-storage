@@ -14,6 +14,11 @@
 
 include Google::Gcs
 
+# Support whyrun
+def whyrun_supported?
+  true
+end
+
 # List information about objects in an Google Storage bucket
 # TODO
 #action :get do
@@ -21,36 +26,41 @@ include Google::Gcs
 
 # Create an Google Storage bucket
 action :put do
-  begin
-    Chef::Log.info("Attempting to create bucket #{new_resource.bucket_name}")
-    response = gcs.put_bucket(new_resource.bucket_name)
-  rescue Excon::Errors::Error => e
-    print_error(e, new_resource.bucket_name)
-  rescue => e
-    Chef::Log.info(e)
-  else
-    if response.status == 200
-      Chef::Log.info("Success creating bucket #{new_resource.bucket_name}")
+  # TODO: Determine if bucket exists
+  converge_by("Create bucket #{new_resource.bucket_name}") do
+    begin
+      Chef::Log.info("Attempting to create bucket #{new_resource.bucket_name}")
+      response = gcs.put_bucket(new_resource.bucket_name)
+    rescue Excon::Errors::Error => e
+      print_error(e, new_resource.bucket_name)
+    rescue => e
+      Chef::Log.info(e)
     else
-      Chef::Log.info("Creating bucket #{new_resource.bucket_name} returned #{response.status}")
+      if response.status == 200
+        Chef::Log.info("Success creating bucket #{new_resource.bucket_name}")
+      else
+        Chef::Log.info("Creating bucket #{new_resource.bucket_name} returned #{response.status}")
+      end
     end
   end
 end
 
 # Delete an Google Storage bucket
 action :delete do
-  begin
-    Chef::Log.info("Attempting to delete bucket #{new_resource.bucket_name}")
-    response = gcs.delete_bucket(new_resource.bucket_name)
-  rescue Excon::Errors::Error => e
-    print_error(e, new_resource.bucket_name)
-  rescue => e
-    Chef::Log.info(e)
-  else
-    if response.status == 204
-      Chef::Log.info("Success deleting bucket #{new_resource.bucket_name}")
+  converge_by("Delete bucket #{new_resource.bucket_name}") do
+    begin
+      Chef::Log.info("Attempting to delete bucket #{new_resource.bucket_name}")
+      response = gcs.delete_bucket(new_resource.bucket_name)
+    rescue Excon::Errors::Error => e
+      print_error(e, new_resource.bucket_name)
+    rescue => e
+      Chef::Log.info(e)
     else
-      Chef::Log.info("Deleting bucket #{new_resource.bucket_name} returned #{response.status}")
+      if response.status == 204
+        Chef::Log.info("Success deleting bucket #{new_resource.bucket_name}")
+      else
+        Chef::Log.info("Deleting bucket #{new_resource.bucket_name} returned #{response.status}")
+      end
     end
   end
 end

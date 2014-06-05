@@ -78,7 +78,7 @@ Actions:
 
 ### object create
 
-This will copy a local file to GCS with private permissions set.
+This will copy a local file to GCS with default private permissions set.
 
 ```ruby
     gcs_object "my_file" do
@@ -105,7 +105,6 @@ with the optional `target_bucket_name`.
       action :copy
     end
 ```
-
 
 License and Authors
 ===================
