@@ -3,7 +3,8 @@
 ## Description
 
 This cookbook provides libraries, resources and providers to configure
-and manage Google Cloud Storage components. The currently supported
+and manage [Google Cloud Storage](https://cloud.google.com/products/cloud-storage/)
+components. The currently supported
 GCS resources are:
 
  * bucket (`bucket`)
