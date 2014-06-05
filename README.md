@@ -60,8 +60,9 @@ Manage GCS objects with this resource.
 
 Actions:
 
-* `put` - create a object.
-* `delete` - delete a object.
+* `get` - download an object.
+* `put` - upload an object.
+* `delete` - delete object.
 * `copy` - copy an object from one bucket to another.
 
 ### bucket.rb
@@ -70,7 +71,7 @@ Manage GCS buckets with this resource.
 
 Actions:
 
-* `put` - create a new bucket.
+* `put` - create a bucket.
 * `delete` - delete a bucket.
 
 ## Usage
