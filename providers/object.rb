@@ -15,14 +15,27 @@
 include Google::Gcs
 
 # Get an object from Google Storage
-# TODO
-#action :get do
-#end
+action :get do
+  # check first if file exists
+  begin
+    Chef::Log.info("Attempting to download #{new_resource.bucket_name}:#{new_resource.object_name} to #{new_resource.local_path}")
+    opts = {}
+    bucket = gcs.directories.get(new_resource.bucket_name)
+    object = bucket.files.get(new_resource.object_name, opts)
+    raise if object.nil?
+    ::File.open(new_resource.local_path, 'wb') {|f| f.write(object.body) }
+  rescue => e
+    Chef::Log.info("Error #{new_resource.bucket_name}:#{new_resource.object_name} does not exist")
+    Chef::Log.debug(e)
+  else
+    Chef::Log.info("Success downloading #{new_resource.bucket_name}:#{new_resource.object_name} to #{new_resource.local_path}")
+  end
+end
 
 # Create an object in an Google Storage bucket
 action :put do
   begin
-    Chef::Log.info("Attempting to create #{new_resource.bucket_name}:#{new_resource.object_name}")
+    Chef::Log.info("Attempting to upload #{new_resource.bucket_name}:#{new_resource.object_name}")
     opts = {}
     opts[:'Cache-Control'] = new_resource.cache_control if new_resource.cache_control 
     opts[:'Content-Disposition'] = new_resource.content_disposition if new_resource.content_disposition

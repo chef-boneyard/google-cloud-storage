@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-actions :put, :delete, :copy
+actions :get, :put, :delete, :copy
 
 attribute :access_key_id,                   :kind_of => String, :required => true
 attribute :secret_access_key,               :kind_of => String, :required => true
