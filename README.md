@@ -4,8 +4,7 @@
 
 This cookbook provides libraries, resources and providers to configure
 and manage [Google Cloud Storage](https://cloud.google.com/products/cloud-storage/)
-components. The currently supported
-GCS resources are:
+components. The currently supported GCS resources are:
 
  * bucket (`bucket`)
  * object (`object`)
@@ -31,24 +30,24 @@ on the left side of the page. Your "Interoperable Storage Access Keys" will
 now be listed.
 
 ```ruby
-    % knife data bag show gcs credentials 
-    {
-      "access_key_id": "AABBCCDDEE",
-      "secret_access_key": "abcdefg23456789+0"
-    }
+% knife data bag show gcs credentials
+{
+  "access_key_id": "AABBCCDDEE",
+  "secret_access_key": "abcdefg23456789+0"
+}
 ```
 
 This can be loaded in a recipe with:
 
 ```ruby
-    gcs = data_bag_item("gcs", "credentials")
+gcs = data_bag_item("gcs", "credentials")
 ```
 
 And to access the values:
 
 ```ruby
-    gcs['access_key_id']
-    gcs['secret_access_key']
+gcs['access_key_id']
+gcs['secret_access_key']
 ```
 
 ## Resources and Providers
@@ -82,13 +81,13 @@ Actions:
 This will copy a local file to GCS with default private permissions set.
 
 ```ruby
-    gcs_object "my_file" do
-      access_key_id gcs['access_key_id']
-      secret_access_key gcs['secret_access_key']
-      bucket_name "my_bucket"
-      local_path "/path/to/my_file"
-      action :put
-    end
+gcs_object "my_file" do
+  access_key_id gcs['access_key_id']
+  secret_access_key gcs['secret_access_key']
+  bucket_name "my_bucket"
+  local_path "/path/to/my_file"
+  action :put
+end
 ```
 
 ### object copy
@@ -98,13 +97,13 @@ the target object name will be the same as source unless specified
 with the optional `target_bucket_name`.
 
 ```ruby
-    gcs_object "my_file" do
-      access_key_id gcs['access_key_id']
-      secret_access_key gcs['secret_access_key']
-      source_bucket_name "my_bucket"
-      target_bucket_name "my_other_bucket"
-      action :copy
-    end
+gcs_object "my_file" do
+  access_key_id gcs['access_key_id']
+  secret_access_key gcs['secret_access_key']
+  source_bucket_name "my_bucket"
+  target_bucket_name "my_other_bucket"
+  action :copy
+end
 ```
 
 License and Authors
